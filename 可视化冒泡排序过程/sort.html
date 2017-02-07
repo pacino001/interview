@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <style type="text/css" media="screen">
+    #static {
+        width: 400px;
+        height: 500px;
+        position: relative;
+        background-color: black;
+        margin: 50px auto;
+    }
+
+    .bar {
+        position: absolute;
+        background-color: green;
+        bottom: 0;
+        border: 1px solid red;
+        width: 48px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="static">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    <script type="text/javascript">
+    (function(d) {
+        var bars = [].slice.call(d.querySelectorAll('.bar'));
+        var arr = [9, 4, 1, 8, 6, 7, 2, 3];
+        var status = [];
+
+
+        var paixu = function() {
+            var bar;
+            var s = status.shift() || [];
+            for (bar in bars) {
+                bars[bar].style.height = 50 * s[bar]+"px";
+                bars[bar].style.left = 50 * bar+"px";
+            }
+        }
+
+        var sort = function(arr) {
+            for (var i = 0; i < arr.length; i++) {
+                for (var j = 0; j < arr.length - i - 1; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        arr[j] = arr[j] + arr[j + 1];
+                        arr[j + 1] = arr[j] - arr[j + 1];
+                        arr[j] = arr[j] - arr[j + 1];
+                        status.push(arr.slice());
+                    }
+                }
+            }
+        }
+        sort(arr);
+        setInterval(paixu,500);
+    })(document);
+    </script>
+</body>
+
+</html>
